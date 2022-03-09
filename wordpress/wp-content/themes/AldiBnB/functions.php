@@ -3,7 +3,7 @@ add_action('after_setup_theme', 'aldibnbSetupTheme');
 function aldibnbSetupTheme()
 {
     add_theme_support('title-tag');
-    //add_theme_support('post-thumbnails');
+    add_theme_support('post-thumbnails');
     add_theme_support('menus');
     register_nav_menu('header', 'Menu du header');
 }
@@ -52,3 +52,26 @@ add_filter('nav_menu_link_attributes', function ($attr) {
     $attr['class'] = 'nav-link';
     return $attr;
 });
+
+function aldibnbPaginate()
+{
+    $pages = paginate_links(['type' => 'array']);
+    if (!$pages) {
+        return null;
+    }
+
+    ob_start();
+    echo '<nav aria-label="Page navigation example">';
+    echo '<ul class="pagination">';
+
+    foreach ($pages as $page) {
+        $active = strpos($page, 'current');
+        $liClass = $active ? 'page-item active' : 'page-item';
+        $page = str_replace('page-numbers', 'page-link', $page);
+
+        echo sprintf('<li class="%s">%s</li>', $liClass, $page);
+    }
+    echo '</ul></nav>';
+
+    return ob_get_clean();
+}

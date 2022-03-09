@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-<h1>AldiBnB</h1>
 
 
 <?php if (have_posts()) : ?>
